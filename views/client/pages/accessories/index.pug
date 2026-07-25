@@ -1,0 +1,33 @@
+extends ../../layouts/default.pug
+
+block main
+  //- 1. Phần Banner quảng cáo
+  section.banner
+    .container
+      .banner-content
+        h1 S-Mobile - Khám phá công nghệ đỉnh cao
+        p Sắm ngay điện thoại mới với ngàn ưu đãi hấp dẫn trong tháng này!
+        a.btn-buy-now(href="/products") Mua ngay
+  //- 3. Phần Sản phẩm bán chạy (Lưới sản phẩm)
+  section.featured-products
+    .container
+      h2.section-title Sản Phẩm Bán Chạy
+      .product-grid
+        //- Kiểm tra nếu có sản phẩm thì mới in ra
+        if products.length > 0
+          //- Duyệt qua mảng dữ liệu lấy từ Database
+          each item in products
+            .product-card
+              .product-image
+                //- Lấy link ảnh và tên sản phẩm từ Database
+                img(src=item.thumbnail, alt=item.title)
+              .product-info
+                //- Hiển thị tên sản phẩm
+                h3.product-title #{item.title}
+                //- Hiển thị giá (Dùng toLocaleString để có dấu chấm phân cách hàng nghìn)
+                .product-price #{item.price.toLocaleString('vi-VN')} đ
+                //- Có thể gắn thêm _id vào link để làm chức năng xem chi tiết
+                a.btn-add-cart(href=`/cart/add/${item._id}`) Thêm vào giỏ
+        else
+          //- Hiển thị khi database chưa có dữ liệu
+          p Hiện tại chưa có sản phẩm nào.

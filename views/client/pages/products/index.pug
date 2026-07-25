@@ -1,0 +1,33 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-3
+    //- FORM LỌC & SẮP XẾP
+    .filter-box.mb-4.p-3.border.rounded
+      form(action="/products" method="GET" class="row")
+        .col-md-3
+          input(type="text" name="brand" placeholder="Thương hiệu (Apple, Samsung...)" class="form-control" value=query.brand)
+        .col-md-2
+          input(type="number" name="priceMin" placeholder="Giá min" class="form-control" value=query.priceMin)
+        .col-md-2
+          input(type="number" name="priceMax" placeholder="Giá max" class="form-control" value=query.priceMax)
+        .col-md-3
+          select(name="sortKey" class="form-control")
+            option(value="price") Giá
+          select(name="sortValue" class="form-control")
+            option(value="asc") Giá tăng dần
+            option(value="desc") Giá giảm dần
+        .col-md-2
+          button(type="submit" class="btn btn-primary btn-block") Lọc
+
+    //- DANH SÁCH SẢN PHẨM
+    .product-grid
+      each item in products
+        .product-card
+          a(href=`/products/detail/${item._id}`)
+            .product-image
+              img(src=item.thumbnail, alt=item.title)
+            h3.product-title #{item.title}
+            .product-price #{item.price.toLocaleString('vi-VN')} đ
+          
+          a.btn-add-cart(href=`/cart/add/${item._id}`) Thêm vào giỏ

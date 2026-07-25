@@ -1,0 +1,11 @@
+extends ../../layouts/default.pug
+
+block main
+  h1 Chi tiết liên hệ
+  .card
+    .card-body
+      p <b>Họ tên:</b> #{contact.fullName}
+      p <b>Email:</b> #{contact.email}
+      p <b>Tiêu đề:</b> #{contact.subject}
+      p <b>Nội dung:</b> #{contact.message}
+  a(href=`${prefixAdmin}/contacts` class="btn btn-secondary mt-3") Quay lại

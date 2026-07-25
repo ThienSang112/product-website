@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Trang tổng quan
+  
+  .row
+    .col-12.col-md-4
+      .card.mb-4.text-white.bg-primary
+        .card-body
+          h5 Sản phẩm
+          p.h3 #{statistic.product.total}
+    .col-12.col-md-4
+      .card.mb-4.text-white.bg-danger
+        .card-body
+          h5 Tài khoản Admin
+          p.h3 #{statistic.account.total}
+    .col-12.col-md-4
+      .card.mb-4.text-white.bg-warning
+        .card-body
+          h5 Người dùng
+          p.h3 #{statistic.user.total}
+
+  .row
+    .col-12
+      .card
+        .card-header Biểu đồ Traffic
+        .card-body
+          //- Chỗ này sẽ gắn Chart.js vào
+          canvas(id="myChart" height="100")

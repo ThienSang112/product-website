@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    +box-head("Liên hệ")
+    .row
+      .col-md-6
+        .card.p-3
+          h5 Thông tin cửa hàng
+          p #[strong Địa chỉ:] 254 Nguyễn Văn Linh, Đà Nẵng
+          p #[strong Hotline:] 0123.456.789
+          p #[strong Email:] cskh@smobile.com
+      .col-md-6
+        .card.p-3
+            form(action="/lien-he" method="POST")
+            .form-group
+                input(type="text" class="form-control" name="fullName" placeholder="Họ tên" required)
+            .form-group
+                input(type="email" class="form-control" name="email" placeholder="Email")
+            .form-group
+                input(type="text" class="form-control" name="phone" placeholder="Số điện thoại")
+            .form-group
+                input(type="text" class="form-control" name="subject" placeholder="Tiêu đề")
+            .form-group
+                textarea(class="form-control" name="message" placeholder="Nội dung" required)
+            button(type="submit" class="btn btn-primary") Gửi liên hệ

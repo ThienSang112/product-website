@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    +box-head("Cơ hội nghề nghiệp")
+    .card.p-4
+      h4 Các vị trí đang tuyển dụng:
+      table.table.table-bordered
+        thead
+          tr
+            th Vị trí
+            th Số lượng
+            th Yêu cầu
+        tbody
+          tr
+            td Nhân viên bán hàng
+            td 02
+            td Giao tiếp tốt, yêu thích công nghệ.
+          tr
+            td Kỹ thuật viên sửa chữa
+            td 01
+            td Có kinh nghiệm 1 năm trở lên.
+      p Vui lòng gửi CV về: #[strong hr@smobile.com]

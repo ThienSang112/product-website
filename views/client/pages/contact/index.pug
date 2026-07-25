@@ -1,0 +1,63 @@
+extends ../../layouts/default.pug
+
+block main
+  section.contact-section
+    .container
+      h2.section-title Liên Hệ Với Chúng Tôi
+      
+      .contact-wrapper
+        //- Cột 1: Thông tin liên hệ & Bản đồ
+        .contact-info
+          <h3>S-MOBILE</h3>
+          p Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi, góp ý hoặc yêu cầu hỗ trợ nào. Chúng tôi sẽ phản hồi bạn trong vòng 24h.
+          
+          .info-list
+            .info-item
+              strong Địa chỉ: 
+              span 254 Nguyễn Văn Linh, Quận Thanh Khê, TP. Đà Nẵng
+            .info-item
+              strong Điện thoại: 
+              span 0123.456.789
+            .info-item
+              strong Email: 
+              span support@smobile.com
+            .info-item
+              strong Thời gian làm việc: 
+              span 8:00 - 21:30 (Cả thứ 7 & Chủ Nhật)
+          
+          //- Bản đồ Google Maps (Thay src bằng link nhúng bản đồ thực tế của bạn nếu cần)
+          .contact-map
+            iframe(
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.9160533602113!2d108.21213447582522!3d16.069812639433405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142183424c3b52b%3A0x6bda1950d859ec5e!2zMjU0IE5ndXnhu4VuIFbEg24gTGluaCwgVGhhbmggS2jDqSwgxJDDoCBO4bq5bmcgNTUwMDAwLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1710000000000" 
+              width="100%" 
+              height="250" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy"
+            )
+
+        //- Cột 2: Form gửi thông tin liên hệ
+        .contact-form-wrapper
+          <h3>Gửi Lời Nhắn</h3>
+          form.contact-form(action="/contact", method="POST")
+            .form-group
+              label(for="fullName") Họ và tên *
+              input#fullName(type="text", name="fullName", placeholder="Nhập họ và tên của bạn", required)
+            
+            .form-row
+              .form-group
+                label(for="email") Email *
+                input#email(type="email", name="email", placeholder="Nhập địa chỉ email", required)
+              .form-group
+                label(for="phone") Số điện thoại *
+                input#phone(type="tel", name="phone", placeholder="Nhập số điện thoại", required)
+            
+            .form-group
+              label(for="subject") Tiêu đề *
+              input#subject(type="text", name="subject", placeholder="Bạn muốn liên hệ về vấn đề gì?", required)
+            
+            .form-group
+              label(for="message") Nội dung lời nhắn *
+              textarea#message(name="message", rows="5", placeholder="Nhập nội dung lời nhắn tại đây...", required)
+            
+            button.btn-submit(type="submit") Gửi liên hệ

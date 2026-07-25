@@ -1,0 +1,16 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        h1 Đặt hàng thành công!
+        p Cảm ơn bạn đã mua hàng. 
+        
+        //- Hiển thị mã đơn hàng ở đây
+        .alert.alert-success
+          | Mã đơn hàng của bạn là: 
+          strong(style="font-size: 1.5rem; color: #d32f2f;") #{order.orderCode}
+        
+        p Vui lòng lưu lại mã này để tra cứu tình trạng giao hàng.
+        a(href="/giao-hang" class="btn btn-primary") Đi đến trang tra cứu

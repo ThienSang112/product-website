@@ -1,0 +1,20 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Chỉnh sửa nhóm quyền
+  
+  if (record)
+    form(
+      action=`${prefixAdmin}/roles/edit/${record._id}?_method=PATCH`
+      method="POST"
+    )
+      .form-group
+        label Tiêu đề
+        input(type="text" class="form-control" name="title" value=record.title required)
+      .form-group
+        label Mô tả
+        input(type="text" class="form-control" name="description" value=record.description)
+      .form-group
+        button(type="submit" class="btn btn-primary") Cập nhật
+  else
+    p Không tìm thấy nhóm quyền này!

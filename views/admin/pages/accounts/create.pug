@@ -1,0 +1,83 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Thêm mới tài khoản quản trị
+
+  //- Form gửi về luồng xử lý riêng của Admin
+  form(
+    action=`${prefixAdmin}/accounts/create`
+    method="POST"
+  )
+    .form-group.mb-3
+      label(for="fullName" class="font-weight-bold") Họ và tên *
+      input(
+        type="text"
+        class="form-control"
+        id="fullName"
+        name="fullName"
+        required
+      )
+    
+    .form-group.mb-3
+      label(for="email" class="font-weight-bold") Email *
+      input(
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        required
+      )
+
+    .form-group.mb-3
+      label(for="password" class="font-weight-bold") Mật khẩu *
+      input(
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        required
+      )
+
+    //- Thêm ô nhập số điện thoại vì model Admin nãy chúng ta có khai báo
+    .form-group.mb-3
+      label(for="phone" class="font-weight-bold") Số điện thoại
+      input(
+        type="text"
+        class="form-control"
+        id="phone"
+        name="phone"
+      )
+    .form-group
+      label(for="role_id") Chức vụ
+      select(name="role_id" id="role_id" class="form-control")
+        option(value="") -- Chọn chức vụ --
+        each role in roles
+          option(value=role.id) #{role.title}
+
+    .form-group.mb-4
+      label(class="font-weight-bold mr-3") Trạng thái:
+      .form-check.form-check-inline
+        input(
+          class="form-check-input"
+          type="radio"
+          name="status"
+          id="statusActive"
+          value="active"
+          checked
+        )
+        label(class="form-check-label" for="statusActive") Hoạt động
+      .form-check.form-check-inline
+        input(
+          class="form-check-input"
+          type="radio"
+          name="status"
+          id="statusInActive"
+          value="inactive"
+        )
+        label(class="form-check-label" for="statusInActive") Dừng hoạt động
+
+    .form-group
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Tạo mới

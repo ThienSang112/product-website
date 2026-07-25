@@ -1,0 +1,64 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    +box-head("Chính sách bảo hành - đổi hàng - hoàn tiền")
+    
+    //- Phần Quy trình
+    .card.mb-4
+      .card-body
+        h4 Quy trình bảo hành - đổi hàng - hoàn tiền
+        .row.text-center
+          .col-3 Bước 1: Liên hệ CSKH (Website/Zalo)
+          .col-3 Bước 2: Gửi sản phẩm kèm hóa đơn
+          .col-3 Bước 3: Kiểm tra & báo kết quả
+          .col-3 Bước 4: Trả kết quả/Hỗ trợ phí gửi
+
+    .row
+      //- Cột trái: Chính sách bảo hành
+      .col-md-6
+        .card.h-100
+          .card-header.bg-primary.text-white CHÍNH SÁCH BẢO HÀNH
+          .card-body
+            h5 1. Điều kiện được bảo hành
+            ul
+              li Sản phẩm còn trong thời hạn bảo hành.
+              li Lỗi kỹ thuật do nhà sản xuất.
+              li Có hóa đơn hoặc số điện thoại mua hàng.
+            h5 2. Thời gian bảo hành
+            ul
+              li Máy phát điện, máy laser: 12 tháng.
+              li Pin, sạc, máy bơm: 3 tháng.
+            h5 3. Các trường hợp KHÔNG bảo hành
+            ul
+              li Sử dụng sai cách, quá tải, dùng sai nguồn điện.
+              li Rơi vỡ, vào nước, cháy mạch do dùng sai thiết bị.
+              li Tự ý tháo lắp, sửa chữa.
+
+      //- Cột phải: Chính sách đổi hàng & Hoàn tiền
+      .col-md-6
+        .card.h-100
+          .card-header.bg-success.text-white CHÍNH SÁCH ĐỔI HÀNG & HOÀN TIỀN
+          .card-body
+            h5 1. Trường hợp đổi theo nhu cầu (Máy không lỗi)
+            ul
+              li Trong 7 ngày, máy còn nguyên vẹn, đầy đủ phụ kiện.
+              li Phí khấu trừ: 20% giá trị sản phẩm.
+            h5 2. Trường hợp đổi do lỗi NSX
+            ul
+              li Đổi mới miễn phí 100% trong 7 ngày.
+            h5 3. Chính sách hoàn tiền
+            ul
+              li Chỉ hỗ trợ hoàn tiền trong 7 ngày cho máy chưa sử dụng, nguyên vẹn.
+              li Không hỗ trợ nếu máy đã qua sử dụng, trầy xước.
+
+    //- Phần Footer thông tin liên hệ
+    .alert.alert-info.mt-4
+      .row
+        .col-md-8
+          p Mọi yêu cầu bảo hành - đổi - hoàn tiền vui lòng liên hệ Zalo O842091225 của chúng tôi.
+        .col-md-4.text-center
+          .col-md-12.text-center
+            h5 Quét mã QR để liên hệ Zalo CSKH
+            img(src="/images/frame.png", alt="Zalo QR", width="150px")

@@ -1,0 +1,28 @@
+extends ../../layouts/auth.pug
+
+block main
+  .login-page
+    //- Banner phía sau với các khối hình học
+    .background-shapes
+      .shape.shape-1
+      .shape.shape-2
+      .shape.shape-3
+
+    //- Nội dung chính
+    .login-card
+      .login-header
+        h1 S-MOBILE
+        p Quản trị hệ thống & Phụ kiện
+      
+      .login-body
+        form(action=`${prefixAdmin}/auth/login` method="POST")
+          .form-group
+            label(for="email") Email
+            input(type="email" id="email" name="email" class="form-control" placeholder="admin@smobile.vn" required)
+          .form-group
+            label(for="password") Mật khẩu
+            input(type="password" id="password" name="password" class="form-control" placeholder="••••••••" required)
+          button(type="submit" class="btn-submit") Đăng nhập
+      
+      .login-footer
+        p © 2026 S-Mobile Management System

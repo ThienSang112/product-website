@@ -1,0 +1,36 @@
+extends ../../layouts/default.pug
+
+block main
+  section.products-section(style="padding: 40px 0;")
+    .container
+      //- Tiêu đề thông báo từ khóa khách hàng vừa tìm
+      h2.section-title(style="margin-bottom: 30px; text-transform: uppercase;") 
+        | Kết quả tìm kiếm cho: "#{keyword}"
+
+      .product-grid
+        //- Kiểm tra xem mảng products (từ Controller gửi sang) có dữ liệu hay không
+        if products && products.length > 0
+          each item in products
+            .product-card
+              
+              //- ĐOẠN ĐƯỢC THÊM VÀO: Thẻ a bọc lấy ảnh và thông tin
+              a(href=`/products/detail/${item._id}` style="text-decoration: none; color: inherit; display: block;")
+                .product-image
+                  img(src=item.thumbnail, alt=item.title)
+                .product-info
+                  h3.product-title #{item.title}
+                  .product-price #{item.price.toLocaleString('vi-VN')} đ
+              
+              //- Khối nút Thêm vào giỏ hàng được tách riêng nằm dưới thẻ a
+              .product-info(style="padding-top: 0; margin-top: 10px;")
+                a.btn-add-cart(href=`/cart/add/${item._id}`) Thêm vào giỏ
+        
+        else
+          //- Nếu không tìm thấy sản phẩm nào khớp tên
+          div(style="grid-column: 1/-1; text-align: center; padding: 50px 0;")
+            p(style="font-size: 16px; color: #666; margin-bottom: 20px;") 
+              | Rất tiếc, chúng tôi không tìm thấy sản phẩm nào phù hợp với từ khóa "
+              strong #{keyword}
+              | ".
+            a.btn-buy-now(href="/products" style="display: inline-block; padding: 10px 25px; background: #333; color: white; border-radius: 4px; text-decoration: none;") 
+              | Xem tất cả sản phẩm

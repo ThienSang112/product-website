@@ -1,0 +1,82 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Thống kê doanh thu
+
+  //- 1. Khối hiển thị tổng hợp
+  .row.mb-4
+    .col-md-4
+      .card.bg-primary.text-white
+        .card-body
+          h5 Tổng đơn hàng
+          p.h2 #{totalOrders}
+    .col-md-4
+      .card.bg-success.text-white
+        .card-body
+          h5 Tổng doanh thu
+          p.h2 #{totalRevenue} VNĐ
+    .col-md-4
+      .card.bg-info.text-white
+        .card-body
+          h5 Tổng SP đã bán
+          p.h2 #{totalItemsSold}
+
+  //- 2. Thêm bảng thống kê theo Ngày và Tháng
+  .row.mb-4
+    .col-md-6
+      .card
+        .card-header.font-weight-bold Doanh thu theo ngày
+        .card-body
+          table.table.table-sm
+            thead
+              tr
+                th Ngày
+                th Đơn hàng
+                th Doanh thu
+            tbody
+              each item in statsByDay
+                tr
+                  td #{item._id}
+                  td #{item.count}
+                  td #{item.totalRevenue.toLocaleString()} VNĐ
+    .col-md-6
+      .card
+        .card-header.font-weight-bold Doanh thu theo tháng
+        .card-body
+          table.table.table-sm
+            thead
+              tr
+                th Tháng
+                th Đơn hàng
+                th Doanh thu
+            tbody
+              each item in statsByMonth
+                tr
+                  td #{item._id}
+                  td #{item.count}
+                  td #{item.totalRevenue.toLocaleString()} VNĐ
+
+  //- 3. Bảng chi tiết đơn hàng
+  .card
+    .card-header.font-weight-bold Danh sách đơn hàng chi tiết
+    .card-body
+      table.table.table-hover
+        thead
+          tr
+            th Ngày mua
+            th Người mua
+            th ĐC giao hàng
+            th SĐT
+            th Sản phẩm (SL)
+            th Tổng tiền
+        tbody
+          each order in orders
+            tr
+              td #{order.createdAt.toLocaleDateString("vi-VN")}
+              td #{order.userInfo.fullName}
+              td #{order.userInfo.address}
+              td #{order.userInfo.phone}
+              td 
+                each item in order.products
+                  div #{item.product_id} (x#{item.quantity})
+              td #{order.totalPrice.toLocaleString()} VNĐ

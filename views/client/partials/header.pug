@@ -1,0 +1,47 @@
+header.header
+  .container
+    .header-wrapper
+      //- Phần Logo
+      .inner-logo
+        a(href="/") 
+          span.logo-text S-Mobile
+      
+      //- Phần Menu điều hướng
+      .inner-menu
+        ul
+          li
+            a(href="/") Trang chủ
+          li
+            a(href="/products") Điện thoại
+          li
+            a(href="/accessories") Phụ kiện
+          li
+            a(href="/contact") Liên hệ
+          li
+            a(href="/user/orders") Lịch sử đơn hàng
+
+      //- Phần Tìm kiếm, Giỏ hàng và Tài khoản
+      .inner-actions
+        //- Form tìm kiếm
+        form.search-form(action="/search", method="GET" autocomplete="off" style="position: relative;")
+          input(type="text", name="keyword" placeholder="Tìm iPhone, Samsung...")
+          button(type="submit") Tìm
+          .search-suggest-box
+        
+        //- Giỏ hàng
+        a.cart-icon(href="/cart" style="margin-right: 15px;") 
+          span Giỏ hàng 
+          span.cart-count (#{globalCartCount})
+          
+        //- KHU VỰC TÀI KHOẢN (MỚI THÊM)
+        .user-actions(style="display: flex; gap: 10px; align-items: center; border-left: 1px solid #ccc; padding-left: 15px;")
+          //- Kiểm tra nếu đã đăng nhập (tồn tại biến user)
+          if user
+            span(style="font-size: 14px; font-weight: 600;") Chào, #{user.fullName}
+            a(href="/user/logout" style="font-size: 14px; color: #e60000; text-decoration: none; font-weight: bold;") Đăng xuất
+          //- Nếu chưa đăng nhập
+          else
+            a(href="/user/login" style="font-size: 14px; color: #333; text-decoration: none; font-weight: 500;") Đăng nhập
+            span(style="color: #ccc;") |
+            a(href="/user/register" style="font-size: 14px; color: #333; text-decoration: none; font-weight: 500;") Đăng ký
+            

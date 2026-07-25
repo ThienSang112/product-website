@@ -1,0 +1,30 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    +box-head("Hướng dẫn mua trả góp")
+    
+    .row
+      .col-12
+        .card.p-4
+          h4 1. Điều kiện tham gia
+          ul
+            li Là công dân Việt Nam, độ tuổi từ 18 - 60.
+            li Có thẻ tín dụng (Credit Card) của các ngân hàng hỗ trợ.
+            li Hạn mức thẻ còn đủ để thanh toán toàn bộ giá trị sản phẩm.
+          
+          h4 2. Quy trình mua trả góp
+          .row.text-center.my-4
+            .col-md-4
+              .p-3.border.rounded Bước 1: Chọn sản phẩm & chọn phương thức "Trả góp" tại trang thanh toán.
+            .col-md-4
+              .p-3.border.rounded Bước 2: Chọn ngân hàng và kỳ hạn trả góp (3, 6, 9 hoặc 12 tháng).
+            .col-md-4
+              .p-3.border.rounded Bước 3: Nhập thông tin thẻ và xác nhận thanh toán.
+          
+          h4 3. Ưu đãi
+          p - Lãi suất 0% cho tất cả các kỳ hạn.
+          p - Không cần hồ sơ rườm rà, xét duyệt online tức thì.
+          
+          p.text-danger * Lưu ý: Quý khách vui lòng kiểm tra kỹ hạn mức thẻ trước khi thực hiện giao dịch.

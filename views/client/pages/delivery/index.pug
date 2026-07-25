@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Tra cứu đơn hàng")
+    
+    .row
+      .col-6
+        form(action="/giao-hang/tracking" method="POST")
+          .form-group
+            input(type="text" class="form-control" name="orderCode" placeholder="Nhập mã đơn hàng..." value=orderCode)
+          button(type="submit" class="btn btn-primary") Tra cứu
+
+    //- Hiển thị kết quả nếu tìm thấy đơn hàng
+    if (order)
+      .row.mt-4
+        .col-12
+          .card
+            .card-header Thông tin đơn hàng: #{order.orderCode}
+            .card-body
+              p #[strong Họ tên:] #{order.userInfo.fullName}
+              p #[strong Trạng thái:] #{order.status}
+              p #[strong Tổng tiền:] #{order.totalPrice.toLocaleString()}đ
+              p #[strong Ngày dự kiến nhận:] #{order.estimatedDeliveryDate ? order.estimatedDeliveryDate.toLocaleDateString('vi-VN') : "Chưa cập nhật"}
+              p #[strong Địa chỉ:] #{order.userInfo.address}
+    else if (orderCode)
+      .row.mt-4
+        .col-12
+          .alert.alert-danger Không tìm thấy đơn hàng có mã: #{orderCode}

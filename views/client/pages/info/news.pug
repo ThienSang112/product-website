@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    +box-head("Tin tức công nghệ")
+    .row
+      .col-md-4
+        .card
+          img.card-img-top(src="/images/news1.png" alt="Tin tức")
+          .card-body
+            h5.card-title Top 5 điện thoại đáng mua nhất 2026
+            p.card-text Những siêu phẩm công nghệ vừa ra mắt...
+            a(href="#").btn.btn-outline-primary Xem thêm
+      //- Bạn có thể copy thêm các cột tương tự ở đây

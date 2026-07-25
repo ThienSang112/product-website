@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Chỉnh sửa tài khoản
+  
+  //- Sử dụng 'account' đúng như cách bạn truyền từ Controller
+  if (account)
+    form(
+      action=`${prefixAdmin}/accounts/edit/${account._id}?_method=PATCH`
+      method="POST"
+    )
+      .form-group
+        label Họ tên
+        input(type="text" name="fullName" class="form-control" value=account.fullName required)
+      
+      .form-group
+        label Email
+        input(type="email" name="email" class="form-control" value=account.email required)
+      
+      .form-group
+        label Mật khẩu (để trống nếu không đổi)
+        input(type="password" name="password" class="form-control")
+      
+      .form-group
+        label Phân quyền
+        select(name="role_id" class="form-control")
+          option(value="" disabled) -- Chọn quyền --
+          each role in roles
+            option(
+              value=role.id
+              selected=(account.role_id && role.id.toString() == account.role_id.toString())
+            ) #{role.title}
+      
+      .form-group
+        button(type="submit" class="btn btn-primary") Cập nhật
+  else
+    div(class="alert alert-danger") Tài khoản không tồn tại!

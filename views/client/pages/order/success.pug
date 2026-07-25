@@ -1,0 +1,11 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        h1 Đặt hàng thành công!
+        p Cảm ơn bạn đã mua hàng. Mã đơn hàng của bạn là: 
+          strong(style="color: red;") #{order.orderCode}
+        p Vui lòng lưu lại mã này để tra cứu tình trạng giao hàng.
+        a(href="/giao-hang" class="btn btn-primary") Tra cứu ngay

@@ -1,0 +1,74 @@
+extends ../../layouts/default.pug
+
+block main
+  section.checkout-section(style="padding: 40px 0; background-color: #f5f5fa;")
+    .container
+      h2.section-title Đặt Hàng & Thanh Toán
+      
+      .checkout-wrapper(style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; margin-top: 30px;")
+        
+        //- Cột 1: Form điền thông tin và chọn phương thức
+        .checkout-form(style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);")
+          h3(style="margin-bottom: 20px; font-size: 18px;") 1. Thông tin nhận hàng
+          
+          form(action="/checkout/order" method="POST")
+            .form-group(style="margin-bottom: 15px;")
+              label Họ và tên *
+              input(type="text" name="fullName" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;")
+            
+            .form-group(style="margin-bottom: 15px;")
+              label Số điện thoại *
+              input(type="text" name="phone" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;")
+            
+            .form-group(style="margin-bottom: 30px;")
+              label Địa chỉ giao hàng *
+              input(type="text" name="address" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;")
+
+            h3(style="margin-bottom: 20px; font-size: 18px;") 2. Phương thức thanh toán
+            
+            .form-group(style="margin-bottom: 15px;")
+              label(style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 500;")
+                input(type="radio" name="paymentMethod" value="cash" checked id="pay-cash")
+                | Thanh toán khi nhận hàng (COD)
+            
+            .form-group(style="margin-bottom: 20px;")
+              label(style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 500;")
+                input(type="radio" name="paymentMethod" value="transfer" id="pay-transfer")
+                | Chuyển khoản qua mã QR
+
+            #qr-code-box(style="display: none; text-align: center; background: #f0f8ff; padding: 25px; border-radius: 8px; margin-bottom: 25px; border: 2px dashed #007bff;")
+              p(style="margin-bottom: 15px; font-weight: bold; color: #007bff;") Mở App ngân hàng để quét mã
+              img(src=`https://img.vietqr.io/image/MB-0352442357-compact2.png?amount=${totalPrice}&addInfo=ThanhToanDonHang` alt="QR Code" style="max-width: 250px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);")
+              p(style="margin-top: 15px; font-size: 14px; color: #333;") 
+                | Chủ tài khoản: <strong>DO THIEN SANG</strong> <br> 
+                | Ngân hàng: <strong>MB Bank</strong>
+
+            button.btn-submit(type="submit" style="width: 100%; padding: 16px; background: #e60000; color: white; border: none; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase;") ĐẶT HÀNG NGAY
+
+        //- Cột 2: Tóm tắt đơn hàng bên phải
+        .checkout-summary(style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); align-self: start;")
+          h3(style="margin-bottom: 20px; font-size: 18px;") Đơn hàng của bạn
+          table(style="width: 100%; border-collapse: collapse;")
+            tbody
+              each item in products
+                tr(style="border-bottom: 1px solid #f5f5f5;")
+                  td(style="padding: 15px 0; font-size: 14px;") 
+                    | #{item.productInfo.title} <strong style="color:#e60000; margin-left: 5px;">x #{item.quantity}</strong>
+                  td(style="text-align: right; padding: 15px 0; font-weight: 500;") #{(item.productInfo.price * item.quantity).toLocaleString('vi-VN')} đ
+            tfoot
+              tr
+                td(style="padding-top: 25px; font-weight: bold; font-size: 16px;") TỔNG CỘNG
+                td(style="text-align: right; padding-top: 25px; font-weight: bold; font-size: 20px; color: #e60000;") #{totalPrice.toLocaleString('vi-VN')} đ
+
+  script.
+    const payCash = document.getElementById("pay-cash");
+    const payTransfer = document.getElementById("pay-transfer");
+    const qrBox = document.getElementById("qr-code-box");
+
+    payCash.addEventListener("change", () => {
+      if(payCash.checked) qrBox.style.display = "none";
+    });
+
+    payTransfer.addEventListener("change", () => {
+      if(payTransfer.checked) qrBox.style.display = "block";
+    });

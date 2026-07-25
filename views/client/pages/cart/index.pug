@@ -1,0 +1,55 @@
+extends ../../layouts/default.pug
+
+block main
+  section.cart-section
+    .container
+      h2.section-title Giỏ Hàng Của Bạn
+
+      //- Kiểm tra nếu giỏ hàng có sản phẩm
+      if cart && cart.products.length > 0
+        .cart-wrapper
+          //- Khung bên trái: Danh sách sản phẩm
+          .cart-list
+            table.cart-table
+              thead
+                tr
+                  th Hình ảnh
+                  th Tên sản phẩm
+                  th Giá bán
+                  th Số lượng
+                  th Tổng cộng
+                  th Hành động
+              tbody
+                each item in cart.products
+                  if item.productInfo
+                    tr
+                      td.product-thumb
+                        img(src=item.productInfo.thumbnail, alt=item.productInfo.title)
+                      td.product-title
+                        a(href=`/products/${item.product_id}`) #{item.productInfo.title}
+                      td.product-price #{item.productInfo.price.toLocaleString('vi-VN')} đ
+                      td.product-qty
+                        input(type="number", name="quantity", value=item.quantity, min="1", style="width: 60px; padding: 5px; text-align: center;")
+                      td.product-total-item #{(item.productInfo.price * item.quantity).toLocaleString('vi-VN')} đ
+                      td.product-action
+                        a.btn-delete(href=`/cart/delete/${item.product_id}`) Xóa
+          
+          //- Khung bên phải: Tóm tắt đơn hàng
+          .cart-summary
+            h3 Thông tin đơn hàng
+            .summary-item
+              span Tạm tính:
+              strong #{totalPrice.toLocaleString('vi-VN')} đ
+            .summary-item
+              span Phí vận chuyển:
+              strong Miễn phí
+            hr
+            .summary-item.total-price-box
+              span Tổng tiền thanh toán:
+              span.total-amount #{totalPrice.toLocaleString('vi-VN')} đ
+            a.btn-checkout(href="/checkout") Tiến hành đặt hàng
+      else
+        //- Giao diện hiển thị khi giỏ hàng trống
+        .cart-empty
+          p Giỏ hàng của bạn đang trống rỗng!
+          a.btn-back-home(href="/") Tiếp tục mua sắm

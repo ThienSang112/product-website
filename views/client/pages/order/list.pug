@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-3
+    h1 Lịch sử đặt hàng
+    
+    //- Kiểm tra nếu có đơn hàng mới hiển thị
+    if orders.length > 0
+      each order in orders
+        .card.mb-3
+          .card-header 
+            .row
+              .col-md-8
+                | Mã đơn: #[strong #{order.orderCode ? order.orderCode : "Đang cập nhật"}] - 
+                | Ngày dự kiến nhận hàng: 
+                strong #{order.estimatedDeliveryDate ? order.estimatedDeliveryDate.toLocaleDateString('vi-VN') : "Đang cập nhật"}
+              .col-md-4.text-right
+                //- Nút Tra cứu đơn hàng
+                a(href=`/giao-hang?orderCode=${order.orderCode}` class="btn btn-warning btn-sm") 
+                  | Tra cứu đơn hàng
+          .card-body
+            table.table
+              thead
+                tr
+                  th Hình ảnh
+                  th Tên sản phẩm
+                  th Giá
+                  th Số lượng
+              tbody
+                each item in order.products
+                  tr
+                    td: img(src=item.productInfo.thumbnail, width="80px")
+                    td #{item.productInfo.title}
+                    td #{item.price.toLocaleString()}đ
+                    td #{item.quantity}
+            p.text-right.font-weight-bold Tổng cộng: #{order.totalPrice.toLocaleString()}đ
+    else
+      //- Thông báo nếu chưa có đơn hàng
+      .alert.alert-info Bạn chưa có đơn hàng nào. Hãy mua sắm ngay!
+      a(href="/" class="btn btn-primary") Tiếp tục mua sắm

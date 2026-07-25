@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Quản lý tài khoản khách hàng
+
+  .card.mb-3
+    .card-header 
+      span Danh sách khách hàng đã đăng ký
+
+    .card-body
+      table.table.table-hover.table-sm
+        thead
+          tr
+            th STT
+            th Họ và tên
+            th Email
+            th Trạng thái
+            th Hành động
+        tbody
+          if records && records.length > 0
+            each item, index in records
+              tr
+                td #{index + 1}
+                td #{item.fullName}
+                td #{item.email}
+                td
+                  if(item.status == "active")
+                    span(class="badge badge-success") Hoạt động
+                  else
+                    span(class="badge badge-danger") Bị khóa
+                td
+                  //- Đổi thành thẻ a để chuyển hướng sang trang Sửa
+                  a(
+                    href=`${prefixAdmin}/users/edit/${item._id}` 
+                    class="btn btn-warning btn-sm mr-1"
+                  ) Sửa
+                  
+                  //- Nút Xóa giữ nguyên (đã có data-id chuẩn)
+                  button(
+                    class="btn btn-danger btn-sm btn-delete-user"
+                    data-id=item._id
+                  ) Xóa
+          else
+            tr
+              td(colspan="5" class="text-center") Hệ thống chưa có khách hàng nào đăng ký.
