@@ -5,14 +5,12 @@ const { Server } = require("socket.io");
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const methodOverride = require('method-override');
-// Thêm thư viện session
-const session = require("express-session"); 
+const session = require("express-session");
 
 const systemConfig = require("./config/system");
 const routeAdmin = require("./routers/admin/index.route");
 const route = require("./routers/client/index.router");
 
-const Cart = require("./models/cart.model"); 
 const User = require("./models/user.model");
 
 const app = express();
@@ -31,16 +29,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(methodOverride('_method'));
-app.use(cookieParser("MY_SECRET_KEY")); // Cấu hình secret cho cookie
+app.use(cookieParser(process.env.COOKIE_SECRET)); // ĐÃ SỬA: đọc từ env
 
-// --- CẤU HÌNH SESSION (Thêm vào đây) ---
+// --- CẤU HÌNH SESSION ---
 app.use(session({
-    secret: 'my-secret-key',
+    secret: process.env.SESSION_SECRET,           // ĐÃ SỬA: đọc từ env
     resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 } // Session tồn tại 60 giây (tùy chỉnh)
+    saveUninitialized: false,                     // ĐÃ SỬA: không tạo session rỗng
+    cookie: { maxAge: 60 * 60 * 1000 }            // 1 giờ
 }));
-// --------------------------------------
+// ------------------------
 
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
@@ -49,23 +47,17 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware Cart
-app.use(async (req, res, next) => {
-    try {
-        const cart = await Cart.findOne();
-        res.locals.globalCartCount = cart ? cart.products.length : 0;
-    } catch (error) {
-        res.locals.globalCartCount = 0;
-    }
-    next();
-});
 
 // Middleware User
 app.use(async (req, res, next) => {
-    const tokenUser = req.cookies.tokenUser;
-    if (tokenUser) {
-        const user = await User.findOne({ tokenUser: tokenUser, deleted: false }).select("-password");
-        if (user) res.locals.user = user;
+    try {                                          // ĐÃ SỬA: thêm try/catch
+        const tokenUser = req.cookies.tokenUser;
+        if (tokenUser) {
+            const user = await User.findOne({ tokenUser: tokenUser, deleted: false }).select("-password");
+            if (user) res.locals.user = user;
+        }
+    } catch (error) {
+        console.error(error);
     }
     next();
 });

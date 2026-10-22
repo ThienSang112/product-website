@@ -67,8 +67,10 @@ block main
                 p(style="font-size: 14px; color: #555;") #{review.comment}
           else
             p.text-muted Chưa có đánh giá nào.
-        if relatedProducts && relatedProducts.length > 0
-        section.related-products(style="margin-top: 60px; padding-bottom: 40px;")
+
+      //- 🔥 ĐÃ ĐƯA KHỐI NÀY RA NGOÀI (Cùng cấp với .extra-info) để hiển thị rộng hết khung
+      if relatedProducts && relatedProducts.length > 0
+        section.related-products(style="margin-top: 40px; padding-bottom: 40px;")
           h3(style="margin-bottom: 25px; border-left: 5px solid #e60000; padding-left: 15px;") Sản phẩm tương tự
           .row
             each item in relatedProducts
