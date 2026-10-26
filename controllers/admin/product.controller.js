@@ -26,7 +26,7 @@ module.exports.index = async (req, res) => {
             keyword: keyword || "" // Nếu không có thì gửi chuỗi rỗng
         });
     } catch (error) {
-        console.log("Lỗi lấy danh sách sản phẩm:", error);
+        console.error("Lỗi lấy danh sách sản phẩm:", error);
         res.redirect("back");
     }
 };
@@ -76,7 +76,7 @@ module.exports.editPost = async (req, res) => {
         // Cập nhật thành công thì tự động chuyển hướng về lại bảng danh sách
         res.redirect("/admin/products");
     } catch (error) {
-        console.log("Lỗi cập nhật sản phẩm:", error);
+        console.error("Lỗi cập nhật sản phẩm:", error);
         res.redirect("back");
     }
 };

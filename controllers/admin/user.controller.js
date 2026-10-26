@@ -12,7 +12,7 @@ module.exports.index = async (req, res) => {
             records: records
         });
     } catch (error) {
-        console.log("Lỗi lấy danh sách khách hàng:", error);
+        console.error("Lỗi lấy danh sách khách hàng:", error);
         res.redirect("back");
     }
 };
@@ -69,7 +69,7 @@ module.exports.editPost = async (req, res) => {
         // Sửa xong thì quay lại trang danh sách khách hàng
         res.redirect("/admin/users");
     } catch (error) {
-        console.log("Lỗi cập nhật người dùng:", error);
+        console.error("Lỗi cập nhật người dùng:", error);
         res.redirect("back");
     }
 };

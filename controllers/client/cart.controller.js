@@ -27,7 +27,6 @@ module.exports.index = async (req, res) => {
     }
 
     const cart = await getOrCreateCart(req, res);
-    console.log("CART PAGE:", cart.products.length, "dòng |", JSON.stringify(cart.products));
 
     let totalPrice = 0;
 
@@ -86,7 +85,6 @@ module.exports.add = async (req, res) => {
         quantity: 1
       });
     }
-    console.log("ADD productId:", productId, "| cart:", JSON.stringify(cart.products));
 
     // Cập nhật lại database
     await Cart.updateOne(

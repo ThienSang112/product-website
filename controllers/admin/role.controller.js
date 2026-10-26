@@ -12,10 +12,8 @@ module.exports.index = async (req, res) => {
 module.exports.edit = async (req, res) => {
     try {
         const id = req.params.id;
-        console.log("ID nhận được từ URL:", id); // Kiểm tra ID
 
         const record = await Role.findOne({ _id: id, deleted: false });
-        console.log("Bản ghi tìm thấy:", record); // Kiểm tra xem có tìm thấy bản ghi không
 
         res.render("admin/pages/roles/edit", {
             pageTitle: "Chỉnh sửa nhóm quyền",
@@ -28,7 +26,6 @@ module.exports.edit = async (req, res) => {
 
 module.exports.editPatch = async (req, res) => {
     const id = req.params.id;
-    console.log("ID cần cập nhật là:", id); // Xem nó có ra undefined không
 
     await Role.updateOne({ _id: id }, req.body);
 

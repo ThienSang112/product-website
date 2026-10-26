@@ -50,7 +50,7 @@ module.exports.index = async (req, res) => {
             orders
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.redirect("back");
     }
 };
