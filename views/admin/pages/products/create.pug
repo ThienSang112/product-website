@@ -1,0 +1,60 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Thêm mới sản phẩm
+
+  if error
+    .alert.alert-danger #{error}
+
+  .card
+    .card-body
+      form(action=`${prefixAdmin}/products/create` method="POST")
+        .form-group
+          label(for="title") Tên sản phẩm *
+          input#title.form-control(type="text" name="title" value=old.title required)
+
+        .row
+          .col-md-6
+            .form-group
+              label(for="product_category") Danh mục
+              select#product_category.form-control(name="product_category")
+                option(value="Điện thoại" selected=(old.product_category == "Điện thoại")) Điện thoại
+                option(value="Phụ kiện" selected=(old.product_category == "Phụ kiện")) Phụ kiện
+          .col-md-6
+            .form-group
+              label(for="brand") Thương hiệu
+              input#brand.form-control(type="text" name="brand" value=old.brand placeholder="Apple, Samsung...")
+
+        .row
+          .col-md-4
+            .form-group
+              label(for="price") Giá (đ) *
+              input#price.form-control(type="number" name="price" min="0" value=old.price required)
+          .col-md-4
+            .form-group
+              label(for="discountPercentage") Giảm giá (%)
+              input#discountPercentage.form-control(type="number" name="discountPercentage" min="0" max="100" value=old.discountPercentage)
+          .col-md-4
+            .form-group
+              label(for="stock") Tồn kho
+              input#stock.form-control(type="number" name="stock" min="0" value=old.stock)
+
+        .form-group
+          label(for="thumbnail") Link ảnh
+          input#thumbnail.form-control(type="text" name="thumbnail" value=old.thumbnail placeholder="https://...")
+
+        .form-group
+          label(for="description") Mô tả
+          textarea#description.form-control(name="description" rows="4") #{old.description || ""}
+
+        .form-group
+          label Trạng thái
+          .form-check
+            input#active.form-check-input(type="radio" name="status" value="active" checked=(old.status != "inactive"))
+            label.form-check-label(for="active") Hoạt động
+          .form-check
+            input#inactive.form-check-input(type="radio" name="status" value="inactive" checked=(old.status == "inactive"))
+            label.form-check-label(for="inactive") Dừng hoạt động
+
+        button.btn.btn-primary(type="submit") Thêm mới
+        a.btn.btn-secondary.ml-2(href=`${prefixAdmin}/products`) Quay lại

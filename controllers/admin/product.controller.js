@@ -31,6 +31,66 @@ module.exports.index = async (req, res) => {
     }
 };
 
+// [GET] /admin/products/create
+module.exports.create = (req, res) => {
+    res.render("admin/pages/products/create", {
+        pageTitle: "Thêm mới sản phẩm",
+        old: {},      // dữ liệu đã nhập (rỗng khi mới mở form)
+        error: ""
+    });
+};
+
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+    const old = req.body; // giữ lại dữ liệu đã nhập để hiện lại nếu có lỗi
+
+    try {
+        const title = (req.body.title || "").trim();
+        const price = Number(req.body.price);
+        const stock = Number(req.body.stock) || 0;
+        const discountPercentage = Number(req.body.discountPercentage) || 0;
+
+        // Kiểm tra dữ liệu đầu vào
+        let error = "";
+        if (!title) error = "Vui lòng nhập tên sản phẩm.";
+        else if (Number.isNaN(price) || price < 0) error = "Giá phải là số từ 0 trở lên.";
+        else if (stock < 0) error = "Tồn kho không được âm.";
+        else if (discountPercentage < 0 || discountPercentage > 100) error = "Giảm giá phải từ 0 đến 100.";
+
+        if (error) {
+            return res.render("admin/pages/products/create", {
+                pageTitle: "Thêm mới sản phẩm",
+                old: old,
+                error: error
+            });
+        }
+
+        // Chỉ lấy những trường cho phép, không đưa nguyên req.body vào database
+        await Product.create({
+            title: title,
+            product_category: req.body.product_category,
+            brand: (req.body.brand || "").trim(),
+            description: (req.body.description || "").trim(),
+            price: price,
+            discountPercentage: discountPercentage,
+            stock: stock,
+            thumbnail: (req.body.thumbnail || "").trim(),
+            status: req.body.status === "inactive" ? "inactive" : "active",
+            deleted: false
+        });
+
+        // Thêm thành công thì quay lại bảng danh sách
+        res.redirect("/admin/products");
+    } catch (error) {
+        console.error("Lỗi thêm sản phẩm:", error);
+        res.render("admin/pages/products/create", {
+            pageTitle: "Thêm mới sản phẩm",
+            old: old,
+            error: "Có lỗi xảy ra, vui lòng thử lại."
+        });
+    }
+};
+
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
     try {

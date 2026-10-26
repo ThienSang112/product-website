@@ -9,4 +9,8 @@ router.delete("/delete/:id", controller.deleteItem); // Dùng method DELETE cho 
 router.get("/edit/:id", controller.edit);
 
 router.post("/edit/:id", controller.editPost);
+
+router.get("/create", controller.create);
+
+router.post("/create", controller.createPost);
 module.exports = router;
